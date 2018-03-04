@@ -1,0 +1,22 @@
+(Arduino pin) (chip pin) (chip pin) (arduino pin)
+5VDC------------------------
+  22------01-----24-------|| (tie this pin to 5VDC in rail above)
+  24------02-----23-------25
+  26------03-----22-------27
+  28------04-----21-------29
+  30------05-----20-------31
+  32------06-----19-------33
+  34------07-----18-------35
+  36------08-----17-------37
+  38------09-----16-------39
+  40------10-----15-------41
+  42------11-----14-------43
+Ground----12-----13-------45
+
+Most of the chip pins match directly to the corresponding pins on the end of the Arduino Mega, with the exception of the 5VDC and the Ground.
+
+To build this using a strip board, insert the chip socket(I use ZIF, but a regular SIP or DIP socket will work as well) with the first pins in the second strip down. This is because the Arduino Mega has a 5 volt set of pins on the top of the end pins. I pick two strips between the socket pins and, using a dremel, strip the copper traces between the pin holes, so that they do not bridge anymore. This will be where you solder the parallel pins that connect to the Arduino.
+Don't split the 5VDC or ground lines. Everything else can be split, though you technically don't need to split anything not connecting to the socket pins.
+
+Solder all of the pins to their corresponding pads now.
+Add jumper wires to connect one of the 5VDC pins to the top right pin on the socket and one from the ground strip to the bottom left socket pin. 
