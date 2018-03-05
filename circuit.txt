@@ -20,3 +20,5 @@ Don't split the 5VDC or ground lines. Everything else can be split, though you t
 
 Solder all of the pins to their corresponding pads now.
 Add jumper wires to connect one of the 5VDC pins to the top right pin on the socket and one from the ground strip to the bottom left socket pin. 
+
+See the images folder for some photos of my test build.
