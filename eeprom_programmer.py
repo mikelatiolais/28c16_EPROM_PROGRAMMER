@@ -38,20 +38,24 @@ ser = serial.Serial()
 ser.baudrate = 9600
 ser.port = myargs['-s']
 ser.timeout = 2
-ser.open()
+try:
+  ser.open()
+except:
+  print "Unable to open the serial port: ",myargs['-s']
+  sys.exit()
+
 time.sleep(3) # wait for Arduino
-ser.write(b"V\n")
-print "I wrote V"
-read_val = ser.readline()
-print "I read from serial"
-print read_val
 
 
 # Depending on the operation, either read in or write out
 if operation == "write":
-  with open(myargs['-i'], 'rb') as f:
-      # Slurp the whole file and efficiently convert it to hex all at once
-      hexdata = binascii.hexlify(f.read())
+  try:
+    with open(myargs['-i'], 'rb') as f:
+        # Slurp the whole file and efficiently convert it to hex all at once
+        hexdata = binascii.hexlify(f.read())
+  except:
+    print "Error opening input file"
+    sys.exit()
   hexlist = map(''.join, zip(hexdata[::2], hexdata[1::2]))
 
   print hexlist
@@ -62,18 +66,32 @@ if operation == "write":
     val = hexlist[x]
     serial_string = "W" + hex_addr + ":" + val + "\n"
     print serial_string
-    ser.write(serial_string)
-    read_val = ser.readline()
+    try:
+      ser.write(serial_string)
+      read_val = ser.readline()
+    except:
+      print "Error writing to EEPROM"
+      sys.exit()
     print "Got: ",read_val
 
 if operation == "read":
-  fh = open(myargs['-o'],"w")
+  try:
+    fh = open(myargs['-o'],"w")
+  except:
+    print "Error opening output file"
+    sys.exit()
+
   for x in range(0,int(myargs['-z'])):
     serial_string = "R" + hex(x) + "\n"
     print serial_string
-    ser.write(serial_string)
-    read_val = ser.readline()
+    try:
+      ser.write(serial_string)
+      read_val = ser.readline()
+    except:
+      print "Error reading from EEPROM"
+      sys.exit()
     print "Got:" , read_val
+    x += 16
 
 
 ser.close() 
