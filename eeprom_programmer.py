@@ -79,7 +79,7 @@ if operation == "write":
 
 if operation == "read":
   try:
-    fh = open(myargs['-o'],"ab")
+    fh = open(myargs['-o'],"ab")  # Open binary output file
   except:
     print "Error opening output file"
     sys.exit()
